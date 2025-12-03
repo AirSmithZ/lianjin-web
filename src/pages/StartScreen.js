@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DEFAULT_DIFFICULTY_KEY, DIFFICULTY_STEPS } from '../constants/difficulty';
 
 const DEFAULT_SETTINGS = {
@@ -13,11 +13,6 @@ export default function StartScreen({ settings = DEFAULT_SETTINGS, onUpdateSetti
   useEffect(() => {
     setLocalSettings(settings);
   }, [settings]);
-
-  const activeDifficulty = useMemo(
-    () => DIFFICULTY_STEPS.find((item) => item.key === localSettings.difficulty) ?? DIFFICULTY_STEPS[0],
-    [localSettings.difficulty],
-  );
 
   const startGame = () => {
     onStartGame(localSettings);
@@ -73,7 +68,7 @@ export default function StartScreen({ settings = DEFAULT_SETTINGS, onUpdateSetti
                     </button>
                   ))}
                 </div>
-                {/* <p className="config-value">{activeDifficulty?.caption}</p> */}
+                {/* <p className="config-va?.caption}</p> */}
               </div>
             </div>
           </div>
