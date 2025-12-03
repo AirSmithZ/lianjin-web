@@ -1,10 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import homeBg from '../assets/start/homeBg.png';
-import startIllustration from '../assets/start/start.png';
-import configIcon from '../assets/start/config.png';
-import configBg from '../assets/start/configbg.png';
-import diffcultTitle from '../assets/start/diffcult.png';
-import closeIcon from '../assets/start/close.png';
 import { DEFAULT_DIFFICULTY_KEY, DIFFICULTY_STEPS } from '../constants/difficulty';
 
 const DEFAULT_SETTINGS = {
@@ -36,23 +30,23 @@ export default function StartScreen({ settings = DEFAULT_SETTINGS, onUpdateSetti
 
   return (
     <div className="start-screen">
-      <img src={homeBg} alt="home background" className="start-bg" />
+      <img src="/assets/start/homeBg.png" alt="home background" className="start-bg" />
       <div className="start-overlay">
-        <img src={startIllustration} alt="start screen" className="start-hero" draggable={false} />
+        <img src="/assets/start/start.png" alt="start screen" className="start-hero" draggable={false} />
         <button className="start-button" onClick={startGame} aria-label="开始游戏" />
       </div>
 
       <button className="config-entry" onClick={() => setIsConfigOpen(true)} aria-label="打开设置">
-        <img src={configIcon} alt="config" draggable={false} />
+        <img src="/assets/start/config.png" alt="config" draggable={false} />
       </button>
 
       {isConfigOpen && (
         <div className="config-modal">
           <div className="config-card">
-            <img src={configBg} alt="config background" className="config-bg" draggable={false} />
-            <img src={diffcultTitle} alt="difficulty title" className="config-title" draggable={false} />
+            <img src="/assets/start/configbg.png" alt="config background" className="config-bg" draggable={false} />
+            <img src="/assets/start/diffcult.png" alt="difficulty title" className="config-title" draggable={false} />
             <button className="config-close" onClick={closeConfig} aria-label="关闭设置">
-              <img className='config-close-icon' src={closeIcon} alt="close" draggable={false} />
+              <img className='config-close-icon' src="/assets/start/close.png" alt="close" draggable={false} />
             </button>
             <div className="config-body">
               <div className="config-field">

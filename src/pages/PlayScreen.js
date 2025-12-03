@@ -1,20 +1,7 @@
 import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { v4 as uuidv4 } from 'uuid';
-import arrow from '../assets/play/arrow.png';
-import correctImg from '../assets/play/correct.png';
-import fruitsDetail from '../assets/play/fruitsDetail.png';
-import fruitsInfo from '../assets/play/fruitsInfo.png';
-import guo from '../assets/play/guo.png';
-import playBg from '../assets/play/playground.png';
-import play1Bg from '../assets/play/play1Bg.png';
-import play2Bg from '../assets/play/play2Bg.png';
-import vsImg from '../assets/play/vs.png';
-import wrongImg from '../assets/play/wrong.png';
-import yaoBg from '../assets/play/yaoBg.png';
-import yao1 from '../assets/play/yao1.png';
-import yao2 from '../assets/play/yao2.png';
-import { BAD_FRUITS, FRUITS, GOOD_FRUITS } from '../data/fruits';
+import { BAD_FRUITS, GOOD_FRUITS } from '../data/fruits';
 import { BAD_COUNT_BY_DIFFICULTY, DEFAULT_DIFFICULTY_KEY } from '../constants/difficulty';
 import ResultModal from '../components/ResultModal';
 
@@ -50,7 +37,6 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
   const [selectedFruits, setSelectedFruits] = useState([]);
   const [pendingFruit, setPendingFruit] = useState(null);
   const [feedback, setFeedback] = useState(null);
-  const [turnBanner, setTurnBanner] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [resultModal, setResultModal] = useState(false);
   const [winnerInfo, setWinnerInfo] = useState(null);
@@ -93,8 +79,8 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
     const firstRecipe = [picks[0], picks[1]];
     const secondRecipe = [picks[2], picks[3]];
     return [
-      { id: 'recipe-1', fruits: firstRecipe, label: recipeLabel(firstRecipe), result: yao1 },
-      { id: 'recipe-2', fruits: secondRecipe, label: recipeLabel(secondRecipe), result: yao2 },
+      { id: 'recipe-1', fruits: firstRecipe, label: recipeLabel(firstRecipe), result: '/assets/play/yao1.png' },
+      { id: 'recipe-2', fruits: secondRecipe, label: recipeLabel(secondRecipe), result: '/assets/play/yao2.png' },
     ];
   }, []);
 
@@ -134,9 +120,7 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
   const scheduleNextTurn = useCallback(
     (messageText) => {
       setTurnLocked(true);
-      setTurnBanner(messageText);
       setTimeout(() => {
-        setTurnBanner(null);
         setTurnLocked(false);
         if (currentPlayer === 1) {
           setCurrentPlayer(2);
@@ -324,7 +308,7 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
       const badCount = selection.filter((fruit) => fruit.type === 'bad').length;
       const currentScore = scores[currentPlayer];
       let delta = 0;
-      let overlayImg = wrongImg;
+      let overlayImg = '/assets/play/wrong.png';
       let bannerText = '匹配失败！0 分';
 
       if (badCount === 2) {
@@ -349,14 +333,14 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
         if (matches.length === 2) {
           delta = 10;
           bannerText = '匹配成功！+10 分';
-          overlayImg = correctImg;
+          overlayImg = '/assets/play/correct.png';
         } else if (matches.length === 1) {
           delta = 5;
           bannerText = '匹配成功！+5 分';
-          overlayImg = correctImg;
+          overlayImg = '/assets/play/correct.png';
         } else {
           delta = 0;
-          overlayImg = wrongImg;
+          overlayImg = '/assets/play/wrong.png';
           bannerText = '匹配失败！0 分';
         }
       }
@@ -364,7 +348,7 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
       const finalScore = currentScore + delta;
       const updatedScores = { ...scores, [currentPlayer]: finalScore };
       setScores(updatedScores);
-      setFeedback({ image: delta >= 0 ? overlayImg : wrongImg, text: bannerText });
+      setFeedback({ image: overlayImg, text: bannerText });
       if (isLastTurn) {
         setTimeout(() => {
           setFeedback(null);
@@ -399,7 +383,7 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
 
   return (
     <div className="play-screen">
-      <img src={playBg} alt="playground background" className="play-bg" />
+      <img src="/assets/play/playground.png" alt="playground background" className="play-bg" />
 
       <div className="play-toolbar">
         <button onClick={onBackHome}>돌아가다</button>
@@ -410,7 +394,7 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
       </div>
 
       <div className={`player-card player-1 ${currentPlayer === 1 ? 'active' : ''}`}>
-        <img src={play1Bg} alt="player 1" className="player-card-img" />
+        <img src="/assets/play/play1Bg.png" alt="player 1" className="player-card-img" />
         <div className="player-content">
           <div className="player-content-inner">
             <div className="player-score-block-1">
@@ -429,7 +413,7 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
       </div>
 
       <div className={`player-card player-2 ${currentPlayer === 2 ? 'active' : ''}`}>
-        <img src={play2Bg} alt="player 2" className="player-card-img-2" />
+        <img src="/assets/play/play2Bg.png" alt="player 2" className="player-card-img-2" />
         <div className="player-content">
           <div className="player-content-inner">
             <div className="player-score-block">
@@ -445,8 +429,8 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
         </div>
       </div>
 
-      <img src={vsImg} alt="vs" className="vs-image" />
-      <img src={arrow} alt="arrow indicator" className="vs-arrow" />
+      <img src="/assets/play/vs.png" alt="vs" className="vs-image" />
+      <img src="/assets/play/arrow.png" alt="arrow indicator" className="vs-arrow" />
 
       <div className="recipe-board">
         {/* <img src={yaoBg} alt="recipe background" className="yao-bg" /> */}
@@ -532,28 +516,25 @@ export default function PlayScreen({ settings = DEFAULT_SETTINGS, onBackHome, on
           }
         }}
       >
-        <img src={guo} alt="cauldron" className="guo" draggable="false" />
+        <img src="/assets/play/guo.png" alt="cauldron" className="guo" draggable="false" />
       </div>
 
       <button className="fruit-detail-entry" onClick={() => setDetailOpen(true)} aria-label="查看水果详情">
-        <img src={fruitsDetail} alt="fruits detail entry" />
+        <img src="/assets/play/fruitsDetail.png" alt="fruits detail entry" />
       </button>
 
       {alert && <div className="toast">{alert}</div>}
 
-      {/* {turnBanner && <div className="turn-banner">{turnBanner}</div>} */}
-
       {feedback && (
         <div className="feedback-overlay">
           <img src={feedback.image} alt="feedback" />
-          {/* <p>{feedback.text}</p> */}
         </div>
       )}
 
       {detailOpen && (
         <div className="modal-mask" onClick={() => setDetailOpen(false)}>
           <div className="fruit-detail-modal">
-            <img src={fruitsInfo} alt="fruits info background" className="fruit-info-bg" />
+            <img src="/assets/play/fruitsInfo.png" alt="fruits info background" className="fruit-info-bg" />
           </div>
         </div>
       )}
